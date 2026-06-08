@@ -1,1 +1,0 @@
-export { ensureSeeded, DEFAULT_CATEGORIES } from "./schema";

@@ -1,13 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { VaultProvider } from "@/context/VaultContext";
 import { App } from "./App";
-import { ensureSeeded } from "./lib/db/schema";
 import "./styles/globals.css";
 
-ensureSeeded().then(() => {
-  createRoot(document.getElementById("root")!).render(
-    <StrictMode>
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <VaultProvider>
       <App />
-    </StrictMode>,
-  );
-});
+    </VaultProvider>
+  </StrictMode>,
+);

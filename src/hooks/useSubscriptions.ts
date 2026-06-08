@@ -1,6 +1,7 @@
-import { useCallback } from "react";
+import { useVault } from "@/context/VaultContext";
 import { db } from "@/lib/db/schema";
 import type { Category, Subscription } from "@/types/subscription";
+import { useCallback } from "react";
 import { useLiveQuery } from "./useLiveQuery";
 
 export function useCategories() {
@@ -19,26 +20,37 @@ export function useSettings() {
 }
 
 export function useSubscriptionMutations() {
+  const { schedulePersist } = useVault();
+
   const saveSubscription = useCallback(
     async (sub: Subscription) => {
       await db.subscriptions.put({
         ...sub,
         updatedAt: new Date().toISOString(),
       });
+      schedulePersist();
     },
-    [],
+    [schedulePersist],
   );
 
-  const deleteSubscription = useCallback(async (id: string) => {
-    await db.subscriptions.delete(id);
-  }, []);
+  const deleteSubscription = useCallback(
+    async (id: string) => {
+      await db.subscriptions.delete(id);
+      schedulePersist();
+    },
+    [schedulePersist],
+  );
 
-  const saveCategory = useCallback(async (cat: Category) => {
-    await db.categories.put({
-      ...cat,
-      updatedAt: new Date().toISOString(),
-    });
-  }, []);
+  const saveCategory = useCallback(
+    async (cat: Category) => {
+      await db.categories.put({
+        ...cat,
+        updatedAt: new Date().toISOString(),
+      });
+      schedulePersist();
+    },
+    [schedulePersist],
+  );
 
   const updateCategoryBudget = useCallback(
     async (id: string, monthlyBudgetINR: number | null) => {
@@ -49,8 +61,9 @@ export function useSubscriptionMutations() {
         monthlyBudgetINR,
         updatedAt: new Date().toISOString(),
       });
+      schedulePersist();
     },
-    [],
+    [schedulePersist],
   );
 
   return {

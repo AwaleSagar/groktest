@@ -1,4 +1,5 @@
 import Dexie, { type Table } from "dexie";
+import type { VaultRecord } from "@/lib/crypto/vault";
 import type { AppSettings, Category, Subscription } from "@/types/subscription";
 
 export const DEFAULT_CATEGORIES: Omit<
@@ -32,6 +33,7 @@ export class SubVaultDB extends Dexie {
   categories!: Table<Category, string>;
   subscriptions!: Table<Subscription, string>;
   settings!: Table<AppSettings, string>;
+  vault!: Table<VaultRecord, string>;
 
   constructor() {
     super("subvault");
@@ -40,30 +42,13 @@ export class SubVaultDB extends Dexie {
       subscriptions: "id, categoryId, status, nextDueDate, name",
       settings: "id",
     });
+    this.version(2).stores({
+      categories: "id, name",
+      subscriptions: "id, categoryId, status, nextDueDate, name",
+      settings: "id",
+      vault: "id",
+    });
   }
 }
 
 export const db = new SubVaultDB();
-
-export async function ensureSeeded(): Promise<void> {
-  const count = await db.categories.count();
-  if (count > 0) return;
-
-  const now = new Date().toISOString();
-  await db.transaction("rw", db.categories, db.settings, async () => {
-    for (const cat of DEFAULT_CATEGORIES) {
-      await db.categories.add({
-        ...cat,
-        id: crypto.randomUUID(),
-        createdAt: now,
-        updatedAt: now,
-      });
-    }
-    await db.settings.put({
-      id: "settings",
-      defaultCurrency: "INR",
-      createdAt: now,
-      updatedAt: now,
-    });
-  });
-}
