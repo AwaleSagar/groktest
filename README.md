@@ -1,7 +1,18 @@
 # groktest
 
-A hobby web project.
+A hobby web project built with Vite.
 
 ## Getting started
 
-Open `index.html` in your browser, or serve the folder with any static file server.
+```bash
+npm install
+npm run dev
+```
+
+Open the URL shown in the terminal (usually `http://localhost:5173`).
+
+## Scripts
+
+- `npm run dev` — start the dev server with hot reload
+- `npm run build` — build for production into `dist/`
+- `npm run preview` — preview the production build locally
