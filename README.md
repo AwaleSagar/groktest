@@ -20,12 +20,19 @@ npm run dev
 
 Open the dev URL on your phone (use `npm run dev -- --host` for LAN access).
 
+## Live app
+
+https://awalesagar.github.io/groktest/
+
+On first visit, create a passphrase to encrypt your data on-device.
+
 ## Scripts
 
 - `npm run dev` — development server
 - `npm run build` — production build
 - `npm run preview` — preview production build
 - `npm test` — run unit tests
+- `npm run deploy` — build and publish to GitHub Pages
 
 ## Roadmap
 
