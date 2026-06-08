@@ -1,6 +1,15 @@
-# groktest
+# SubVault
 
-A hobby web project built with Vite.
+A mobile-first PWA to track personal subscriptions, budgets by category, and payment details. Built for INR-first use with flexible per-service currency.
+
+## Features
+
+- Dashboard with monthly burn and upcoming renewals
+- Subscriptions list with search and filters
+- Category budgets with overspend indicators
+- Payment mode (UPI, cards, net banking, etc.) and recurring vs manual
+- Offline-first storage in IndexedDB
+- JSON export/import backup
 
 ## Getting started
 
@@ -9,10 +18,18 @@ npm install
 npm run dev
 ```
 
-Open the URL shown in the terminal (usually `http://localhost:5173`).
+Open the dev URL on your phone (use `npm run dev -- --host` for LAN access).
 
 ## Scripts
 
-- `npm run dev` — start the dev server with hot reload
-- `npm run build` — build for production into `dist/`
-- `npm run preview` — preview the production build locally
+- `npm run dev` — development server
+- `npm run build` — production build
+- `npm run preview` — preview production build
+- `npm test` — run unit tests
+
+## Roadmap
+
+- Passphrase app lock + encrypted vault
+- Supabase sync
+- Gmail receipt parsing
+- Google Sheets export
